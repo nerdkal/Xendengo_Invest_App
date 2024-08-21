@@ -1,0 +1,30 @@
+
+Xendengo_Invest_App
+
+├── public/
+│   ├── style.css
+├── src/
+│   ├── index.js
+│   ├── stockScraper.js
+│   ├── routes.js
+
+
+2. Initialize the Project
+npm init -y
+
+
+3. Install Dependencies
+npm install express axios cheerio
+
+4. Create the Files
+src/index.js
+src/stockScraper.js
+src/routes.js
+public/style.css
+
+
+5. Run the Application
+node src/index.js
+
+6. Access the Application
+Open your web browser and go to http://localhost:3000
