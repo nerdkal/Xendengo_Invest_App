@@ -10,7 +10,9 @@ const stocks = [
     new StockScraper('BBSE3', 'https://www.infomoney.com.br/cotacoes/b3/acao/bb-seguridade-bbse3/'),
     new StockScraper('ITUB3', 'https://www.infomoney.com.br/cotacoes/b3/acao/itau-unibanco-itub3/'),
     new StockScraper('MGLU3', 'https://www.infomoney.com.br/cotacoes/b3/acao/magazine-luiza-mglu3/'),
+    new StockScraper('VULC3', 'https://www.infomoney.com.br/cotacoes/b3/acao/vulcabras-vulc3/'),
     new StockScraper('VALE3', 'https://www.infomoney.com.br/cotacoes/b3/acao/vale-vale3/')
+
 ];
 
 router.get('/', async (req, res) => {
@@ -95,14 +97,17 @@ router.post('/get-url', (req, res) => {
     const { stockName } = req.body;
     const url = `https://www.infomoney.com.br/${stockName.toLowerCase()}`;
 
-    exec(`curl -i ${url} 2>&1 | grep -w 'location'`, (error, stdout, stderr) => {
+    exec(`curl -i ${url} 2>&1 | awk '/location/ {print $2}'`, (error, stdout, stderr) => {
         if (error) {
             console.error(`exec error: ${error}`);
             return res.json({ error: 'Erro ao buscar a URL da ação' });
         }
 
-        const location = stdout.split('\n').find(line => line.includes('location')).trim();
-        res.json({ location: location || 'Nenhuma URL de redirecionamento encontrada' });
+        // Extrai a URL final do stdout
+        const url_final = stdout.match(/https[^\s]+/);
+        // Se a URL final existir, concatena com stockName
+        const location = url_final ? `${stockName} ${url_final[0]}` : 'Nenhuma URL de redirecionamento encontrada';
+        res.json({ location });
     });
 });
 
