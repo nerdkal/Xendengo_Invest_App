@@ -61,3 +61,36 @@ body{
             position: relative;
         }
 
+        .css-button {
+            color: #ffffff;
+            font-size: 15px;
+            border-radius: 6px;
+            border: solid 1px #3866a3;
+            text-shadow: 1px 1px 0px #528ECC;
+            box-shadow: inset 1px 1px 0px 0px #BBDAF7;
+            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            font-family: Verdana;
+            background: linear-gradient(180deg, #63B8EE 10%, #468CCF 100%);
+            display: inline-flex;
+            align-items: center;
+            padding: 0;
+        }
+        .css-button:hover {
+            background: linear-gradient(180deg, #468CCF 10%, #63B8EE 100%);
+        }
+        .css-button-text {
+            position: relative;
+            padding: 3px 6px;
+        }
+        .css-button-icon {
+            position: relative;
+            border-right: 1px solid #ffffff29;
+            box-shadow: inset rgb(0 0 0 / 14%) -1px 0 0;
+            padding: 3px 10px;
+        }
+                
+                
+                
