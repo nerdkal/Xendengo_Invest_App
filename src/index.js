@@ -223,8 +223,3 @@ app.get('/lista', stockController.lista);
 app.post('/adicionar', stockController.adicionar); 
 app.delete('/remover/:id', stockController.remover); 
 app.post('/pegar', stockController.pegar); 
-
-
-
-
-
