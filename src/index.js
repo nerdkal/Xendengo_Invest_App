@@ -44,46 +44,56 @@ db.connect("mongodb://" + (process.env.auth) + "@localhost:27017/ticker?retryWri
 	});
 
 	
+	
 // leitura de dados
 app.get('/', async (req, res) => {
 	try {
 		// Buscando todos os documentos na coleção 'acoes'
 		const acoesList = await Acoes.find({}, { ticker: 1, url: 1, _id: 1, hora: 1 }); // Apenas 'ticker' e 'url' são retornados
 		const stockInfoPromises = acoesList.map(async (acao) => {
-			const scraper = new StockScraper(acao.ticker, acao.url);
-			const scrapedInfo = await scraper.scrapeInfo();
-			return {
+		const scraper = new StockScraper(acao.ticker, acao.url);
+		const scrapedInfo = await scraper.scrapeInfo();
+		return {
 				_id: acao._id,
-				ticker: acao.ticker,
+				ticker: acao.ticker.toUpperCase(),
 				url: acao.url,
 				hora: acao.hora,
 				...scrapedInfo
-			};
+				};
 		});
 		// Executando todas as promessas
 		const stockInfos = await Promise.all(stockInfoPromises);
 		// Gerando o HTML
 		const rows = stockInfos.map(info => `
-            <tr id="row-${info._id}">
-                <td>${info.ticker}</td>
-                <!-- <td><a href="${info.url}" target="_blank">${info.url}</a></td>
-                <td>${info.hora}</td> -->
-                <td>${info.price}</td>
-                <td>${info.percentage}</td>
-                <td>${info.minimo}</td>
-                <td>${info.maximo}</td>
-                <td>${info.vol}</td>
-                <td>${info.i}</td>
-                <td><button class="css-button" onclick="removeAcao('${info._id}')"><span class="css-button-icon"><i class="fa fa-trash-o"></i></span></button></td>
-            </tr>
+		<!--<div class="p-4 space-y-4"> -->
+	    <tr id="row-${info._id}">
+		<td><div>
+        <!-- Stock Item --> 
+        <div>
+            <div>
+				<div class="text-white px-2 py-1 text-sm text-center font-bold">${info.ticker}</div>
+                <td><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.price}</div></td>				
+				<td><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.tipo}</div></td>				
+                <td><div class="${info.cor} text-white px-2 py-1 rounded-md text-sm text-center">${info.percentage}</div></td>		
+				<td><div class="text-sm text-center text-gray-400">${info.minimo}</div></td>
+                <td><div class="text-sm text-center text-gray-400">${info.maximo}</div></td>
+                <td><div class="text-sm text-center text-gray-400">${info.vol}</div></td>
+				<td><div class="text-white px-2 py-1 text-sm text-center">${info.i}</div></td>
+				<td><button class="css-button" onclick="removeAcao('${info._id}')"><span class="css-button-icon"><i class="fa fa-trash-o"></i></span></button></td>
+            </div>
+        </div> 
+		</tr>
         `).join('');
 		const htmlContent = `
 			<!DOCTYPE html>
 			<html>
 			<link rel="stylesheet" href="style.css" type="text/css" />
+			
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			<script src="https://cdn.tailwindcss.com"></script>
+
 			<head>
-				<title>Exportação de Ações</title>			
+			
 				<script>
                 async function removeAcao(id) {
                     try {
@@ -165,27 +175,35 @@ app.get('/', async (req, res) => {
 				});
 			</script>
 			</head>
-			<center>
-				<form id="stockForm">
-					<label for="stockName">Nome da Ação:</label>
-					<input type="text" id="stockName" name="stockName" required>
-					<button class="css-button" type="submit"><span class="css-button-icon"><i class="fa fa-search" aria-hidden="true"></i></span></button>
+			<form id="stockForm">
+				<center>
+				<div class="p-4 bg-gray-800">
+    		    	<span>
+					<input type="text" placeholder="Buscar no XNDG Finanças" class="bg-gray-700 text-gray-300  py-2 px-4 rounded-md focus:outline-none" id="stockName" name="stockName" required/>
+					</span>
+					<button class="css-button" type="submit"><span class="css-button-icon"><i class="fa fa-search" aria-hidden="true"></i></span></button> 
+    			</div>
+					<!-- <label for="stockName">Nome da Ação:</label>
+					<input type="text" id="stockName" name="stockName" required> 
+					<button class="css-button" type="submit"><span class="css-button-icon"><i class="fa fa-search" aria-hidden="true"></i></span></button> -->
 				</form>
             <p id="result"></p>
        		</center>
 			<body>
-			<table>
+			<center><table>
 				<tr>
 					<th>Ticker</th>
 					<th>Preço</th>
-					<th>Variação</th>
+					<th>Tipo</th>
+					<th>Variação</th>					
 					<th>Mínimo</th>
 					<th>Máximo</th>
-					<th>Volume</th>
-					<th>Indicador</th>
+					
+					<th>Volume</th>					
+					<th>indicador</th>	
 				</tr>
 				${rows}
-			</table>
+			</table></center>
 			</body>
 			</html>
 			`;
@@ -204,7 +222,6 @@ app.get('/', async (req, res) => {
 app.get('/lista', stockController.lista);
 app.post('/adicionar', stockController.adicionar); 
 app.delete('/remover/:id', stockController.remover); 
-
 app.post('/pegar', stockController.pegar); 
 
 

@@ -1,96 +1,119 @@
 body{
-	    font-size: 12px;
-	    color: #b3b3b3;
-	    background-color: #36454F;
-          font-family:    "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
+    background-color: #1e202e;
+    }
+    html {
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+        -moz-tab-size: 4;
+        tab-size: 4;
+        font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        -webkit-tap-highlight-color: transparent;
+    }
 
-	    }
-        table {
-            width: 50%;
-            margin: 10px auto;
-            border-collapse: collapse;
-            background-color: #212529;
+    #result {
+        margin-top: 10px;
+        color: #FFC300;
+    }
+    .botao {
+        border-radius: 15px;
+        background-color: #06446e;
+        font-size: 14px;
+        padding: 3px 10px;
+        text-decoration: none;
+        color: #fff;
+       
+        position: relative;
+    }
+
+    .css-button {
+        color: #ffffff;
+        font-size: 15px;
+        border-radius: 6px;
+        border: solid 1px #3866a3;
+        text-shadow: 1px 1px 0px #528ECC;
+        box-shadow: inset 1px 1px 0px 0px #BBDAF7;
+        text-decoration: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        font-family: Verdana;
+        background: linear-gradient(180deg, #63B8EE 10%, #468CCF 100%);
+        display: inline-flex;
+        align-items: center;
+        padding: 0;
+    }
+    .css-button:hover {
+        background: linear-gradient(180deg, #468CCF 10%, #63B8EE 100%);
+    }
+    .css-button-text {
+        position: relative;
+        padding: 3px 6px;
+    }
+    .css-button-icon {
+        position: relative;
+        border-right: 1px solid #ffffff29;
+        box-shadow: inset rgb(0 0 0 / 14%) -1px 0 0;
+        padding: 3px 10px;
+    }
+    .font-bold {
+        font-weight: 700;
+        color: #e5e7eb;
+    }
+    *, ::after, ::before {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
+        border-color: #e5e7eb;
+    }
+    div {
+        display: block;
+        unicode-bidi: isolate;
+        
+    }
+    .text-white {
+        --tw-text-opacity: 1;
+        color: rgb(255 255 255 / var(--tw-text-opacity));
+    }
     
-        }
-        td {
-            border: 1px solid black;
-            font-family: "Arial";
-            text-align: center;
-            padding-bottom: 2px;
-            padding-top: 2px;
-            font-size: 11px;
-            
-		
-        }
-	    tr:nth-child(even) {
-	         background-color: #343434;
-	    }
+    .text-sm {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+    
+    .text-center {
+        text-align: center;
+    }
+    .py-1 {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+    }
+    .px-2 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .bg-red-600 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+    }
+    .bg-green-600 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+    }
+    .rounded-md {
+        border-radius: 0.375rem;
+    }
 
-        tr {
-         opacity: .6;
-        transition: opacity .5s ease-out;
-        -moz-transition: opacity .5s ease-out;
-        -webkit-transition: opacity .5s ease-out;
-        -o-transition: opacity .5s ease-out;}
-        th{
-            opacity: 1;
-            padding: 10px;
-            text-align: center;
-            background-color: #6f42c1;
-            color: #fff;
-            font-family:	"Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-        }
-	    tr:hover {
-            background-color: #424242; /* Change this color to your preference */
-	        color: yellow;
-            opacity: 2;
-        }
-        #result {
-            margin-top: 10px;
-    		color: #FFC300;
-        }
-        .botao {
-            border-radius: 15px;
-            background-color: #1d9bf0;
-            font-size: 14px;
-            padding: 3px 10px;
-            text-decoration: none;
-            color: #fff;
-           
-            position: relative;
-        }
+    .text-gray-600 {
+    --tw-text-opacity: 1;
+    color: rgb(156 163 175 / var(--tw-text-opacity));
+    }
 
-        .css-button {
-            color: #ffffff;
-            font-size: 15px;
-            border-radius: 6px;
-            border: solid 1px #3866a3;
-            text-shadow: 1px 1px 0px #528ECC;
-            box-shadow: inset 1px 1px 0px 0px #BBDAF7;
-            text-decoration: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            font-family: Verdana;
-            background: linear-gradient(180deg, #63B8EE 10%, #468CCF 100%);
-            display: inline-flex;
-            align-items: center;
-            padding: 0;
-        }
-        .css-button:hover {
-            background: linear-gradient(180deg, #468CCF 10%, #63B8EE 100%);
-        }
-        .css-button-text {
-            position: relative;
-            padding: 3px 6px;
-        }
-        .css-button-icon {
-            position: relative;
-            border-right: 1px solid #ffffff29;
-            box-shadow: inset rgb(0 0 0 / 14%) -1px 0 0;
-            padding: 3px 10px;
-        }
-                
-                
-                
+    tr {
+        color: #e5e7eb;
+        
+    }
+
+    
