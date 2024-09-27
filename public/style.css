@@ -94,16 +94,29 @@ body{
         padding-left: 0.5rem;
         padding-right: 0.5rem;
     }
+    .rounded-md {
+        border-radius: 0.375rem;
+    }
+
     .bg-red-600 {
         --tw-bg-opacity: 1;
         background-color: rgb(220 38 38 / var(--tw-bg-opacity));
     }
+    
     .bg-green-600 {
         --tw-bg-opacity: 1;
         background-color: rgb(34 197 94 / var(--tw-bg-opacity));
     }
-    .rounded-md {
-        border-radius: 0.375rem;
+
+    
+    .bg-red-100 {
+        --tw-bg-opacity: 1;
+        background: linear-gradient(to bottom, rgb(233, 135, 135), rgb(71, 32, 32));
+    }
+    
+    .bg-green-100 {
+        --tw-bg-opacity: 1;
+        background: linear-gradient(to bottom, green, rgb(176, 243, 180));
     }
 
     .text-gray-600 {
