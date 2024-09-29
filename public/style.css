@@ -119,6 +119,16 @@ body{
         background: linear-gradient(to bottom, green, rgb(176, 243, 180));
     }
 
+    .bg-pink-100 {
+        --tw-bg-opacity: 1;
+        background: linear-gradient(to bottom, rgb(233, 136, 91), rgb(135, 4, 69));
+    }
+    
+    .bg-blue-100 {
+        --tw-bg-opacity: 1;
+        background: linear-gradient(to bottom, rgb(142, 121, 246), rgb(52, 26, 252));
+    }
+
     .text-gray-600 {
     --tw-text-opacity: 1;
     color: rgb(156 163 175 / var(--tw-text-opacity));

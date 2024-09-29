@@ -74,8 +74,9 @@ app.get('/', async (req, res) => {
 				<div class="text-white px-2 py-1 text-sm text-center font-bold">${info.ticker}</div>
                 <td><div class="text-white px-2 py-1 text-sm text-center font-bold">R$ ${info.price}</div></td>				
 				<td><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.tipo}</div></td>				
-                <td><div class="${info.cor} text-white px-2 py-1 rounded-md text-sm text-center">${info.percentage}</div></td>		
-				<td><div class="${info.cor2} text-white px-2 py-1 rounded-md text-sm text-center">${info.vmes}</div></td>		
+                <td><div class="${info.cordia} text-white px-2 py-1 rounded-md text-sm text-center">${info.percentage}</div></td>		
+				<td><div class="${info.cormes} text-white px-2 py-1 rounded-md text-sm text-center">${info.vmes}</div></td>		
+				<td><div class="${info.corano} text-white px-2 py-1 rounded-md text-sm text-center">${info.vano}</div></td>		
 				<td><div class="text-sm text-center text-gray-400">${info.minimo}</div></td>
                 <td><div class="text-sm text-center text-gray-400">${info.maximo}</div></td>
                 <td><div class="text-sm text-center text-gray-400">${info.vol}</div></td>
@@ -198,6 +199,7 @@ app.get('/', async (req, res) => {
 					<th>Tipo</th>
 					<th>Var. Dia</th>					
 					<th>Var. Mês</th>		
+					<th>Var. Ano</th>		
 					<th>Mínimo</th>
 					<th>Máximo</th>
 					<th>Volume</th>					
