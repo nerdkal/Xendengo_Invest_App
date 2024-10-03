@@ -71,16 +71,20 @@ app.get('/', async (req, res) => {
         <!-- Stock Item --> 
         <div>
             <div>
-				<div class="text-white px-2 py-1 text-sm text-center font-bold">${info.ticker}</div>
-                <td><div class="text-white px-2 py-1 text-sm text-center font-bold">R$ ${info.price}</div></td>				
+				<a href="${info.tradingViewUrl}${info.ticker}"><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.ticker}</div></a>
+				
+				<td><div class="text-white px-2 py-1 text-sm text-center font-bold"> ${info.setor}</div></td>
+				<td><div class="text-white px-2 py-1 text-sm text-center font-bold ">R$ ${info.price}</div></td>				
+				
+
 				<td><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.tipo}</div></td>				
                 <td><div class="${info.cordia} text-white px-2 py-1 rounded-md text-sm text-center">${info.percentage}</div></td>		
 				<td><div class="${info.cormes} text-white px-2 py-1 rounded-md text-sm text-center">${info.vmes}</div></td>		
 				<td><div class="${info.corano} text-white px-2 py-1 rounded-md text-sm text-center">${info.vano}</div></td>		
-				<td><div class="text-sm text-center text-gray-400">${info.minimo}</div></td>
-                <td><div class="text-sm text-center text-gray-400">${info.maximo}</div></td>
+				<td><div style="color:#FF6347" class="text-white px-2 py-1 text-sm text-center font-bold">${info.minimo}</div></td>
+                <td><div style="color:#9ACD32" class="font-bold">${info.maximo}</div></td>
                 <td><div class="text-sm text-center text-gray-400">${info.vol}</div></td>
-				<td><div class="text-white px-2 py-1 text-sm text-center">${info.i}</div></td>
+				<td><div class="text-white px-2 py-1 text-sm text-center"><i>${info.i}</i></div></td>
 				<td><button class="css-button" onclick="removeAcao('${info._id}')"><span class="css-button-icon"><i class="fa fa-trash-o"></i></span></button></td>
             </div>
         </div> 
@@ -93,9 +97,8 @@ app.get('/', async (req, res) => {
 			
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 			<script src="https://cdn.tailwindcss.com"></script>
-
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 			<head>
-			
 				<script>
                 async function removeAcao(id) {
                     try {
@@ -190,12 +193,22 @@ app.get('/', async (req, res) => {
 					<button class="css-button" type="submit"><span class="css-button-icon"><i class="fa fa-search" aria-hidden="true"></i></span></button> -->
 				</form>
             <p id="result"></p>
+			
        		</center>
 			<body>
+			 <div id="imageContainer"></div> <!-- Onde a imagem será exibida -->
+			  <script>
+				// URL da imagem
+				const imageUrl = 'https://s3-symbol-logo.tradingview.com/banco-do-brasil--big.svg';
+
+				// Adiciona a imagem no container
+				$('#imageContainer').html('<img src="' + imageUrl + '" style="width: 30px; height: 30px; border-radius: 50%;">');
+			</script>
 			<center><table>
 				<tr>
-					<th>Ticker</th>
-					<th>Preço</th>
+					<th>Ticker</th>		
+					<th>Setor</th>					
+					<th>Preço</th>			
 					<th>Tipo</th>
 					<th>Var. Dia</th>					
 					<th>Var. Mês</th>		

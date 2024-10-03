@@ -137,6 +137,9 @@ body{
     tr {
         color: #e5e7eb;
         
+        
     }
+    .down { font-size: 20px; background: linear-gradient(to bottom, red, rgb(135, 35, 35)); }
 
-    
+    .up { font-size: 20px; transform: rotate(180deg); background: linear-gradient(to bottom, green, rgb(55, 201, 64));     }
+
