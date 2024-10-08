@@ -143,7 +143,7 @@ app.get('/', async (req, res) => {
 				const resultElement2 = document.getElementById('result2');
 				const location2 = data.location2 || 'Nenhum LOGO de encontrada';
 				resultElement2.textContent = location2;
-				resultElement2.innerHTML = '<img src=' + location2 + ' style="width: 30px; height: 30px; border-radius: 50%;">';
+				resultElement2.innerHTML = '<img src=' + location2 + ' style="width: 50px; height: 50px; border-radius: 50%;">';
 
 
 				// Criando o botão "Adicionar ao Banco de Dados"
@@ -162,8 +162,7 @@ app.get('/', async (req, res) => {
 					})
 					.then(addResponse => addResponse.json())
 					.then(addData => {
-						alert('Ação ' + ticker + ' adicionada ao banco de dados com sucesso!');
-						
+						alert('Ação ' + ticker + ' adicionada ao banco de dados com sucesso!') ? "" :  window.location.reload();
 					})
 					.catch(addError => {
 						console.error('Erro ao adicionar a ação ao banco de dados:', addError);
