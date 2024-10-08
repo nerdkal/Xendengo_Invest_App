@@ -100,12 +100,12 @@ body{
 
     .bg-red-600 {
         --tw-bg-opacity: 1;
-        background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+        font-size: 20px; background: linear-gradient(to bottom, red, rgb(135, 35, 35)); 
     }
     
     .bg-green-600 {
         --tw-bg-opacity: 1;
-        background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+        background: linear-gradient(to bottom, green, rgb(55, 201, 64));
     }
 
     
@@ -116,12 +116,12 @@ body{
     
     .bg-green-100 {
         --tw-bg-opacity: 1;
-        background: linear-gradient(to bottom, green, rgb(176, 243, 180));
+        background: linear-gradient(to bottom, green, rgb(55, 201, 64));
     }
 
     .bg-pink-100 {
         --tw-bg-opacity: 1;
-        background: linear-gradient(to bottom, rgb(233, 136, 91), rgb(135, 4, 69));
+        font-size: 20px; background: linear-gradient(to bottom, red, rgb(135, 35, 35)); 
     }
     
     .bg-blue-100 {

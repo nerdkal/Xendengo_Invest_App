@@ -54,26 +54,19 @@ const remover = async (req, res) => {
 const pegar = async (req, res) => {
     const { stockName } = req.body;
     const url = `https://www.infomoney.com.br/${stockName.toLowerCase()}`;
-    
+    const urlogo = `https://br.tradingview.com/symbols/BMFBOVESPA-${stockName}`;
 
     exec(`curl -i ${url} 2>&1 | awk '/location/ {print $2}'`, (error, stdout) => {
         if (error) return res.json({ error: 'Erro ao buscar a URL da ação' });
-
         const location = stdout.match(/https[^\s]+/) ? `${stockName} ${stdout.match(/https[^\s]+/)[0]}` : 'Nenhuma URL de redirecionamento encontrada';
-        res.json({ location });
-    });
 
-  
-};
-const pegar2 = async (req, res2) => {
-    const { stockName } = req.body;
-    const urlogo = `https://br.tradingview.com/symbols/BMFBOVESPA-${stockName}`;
+    exec(`curl -L -silent ${urlogo} | grep "logo." | cut -d"/" -f6 | grep png | sed 's/"//' | uniq`, (errorLogo, stdoutLogo) => {
+        if (errorLogo) return res.json({ error: 'Erro ao buscar a URL do logo' });
 
-    exec(`curl ${urlogo} 2>&1 | grep "s3-symbol-logo.tradingview.com/" | cut -d"/" -f6 |grep png |sed 's/"//'`, (error, stdout) => {
-        if (error) return res2.json({ error: 'Erro ao buscar a URL da ação' });
-
-      //  const location = stdout.match(/https[^\s]+/) ? `${stockName} ${stdout.match(/https[^\s]+/)[0]}` : 'Nenhuma URL de redirecionamento encontrada';
-        //res2.json({ location });
+        const location2 = stdoutLogo ? `https://s3-symbol-logo.tradingview.com/${stdoutLogo.trim()}` : 'Nenhum logo encontrado';
+        console.log('URLOGO É...', location2);
+    res.json({ location, location2 });
+        });
     });
 };
 
@@ -83,6 +76,4 @@ module.exports = {
     adicionar,
     remover,
     pegar,
-    pegar2,
-
 };

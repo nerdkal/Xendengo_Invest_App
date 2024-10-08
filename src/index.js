@@ -72,11 +72,8 @@ app.get('/', async (req, res) => {
         <div>
             <div>
 				<a href="${info.tradingViewUrl}${info.ticker}"><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.ticker}</div></a>
-				
 				<td><div class="text-white px-2 py-1 text-sm text-center font-bold"> ${info.setor}</div></td>
 				<td><div class="text-white px-2 py-1 text-sm text-center font-bold ">R$ ${info.price}</div></td>				
-				
-
 				<td><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.tipo}</div></td>				
                 <td><div class="${info.cordia} text-white px-2 py-1 rounded-md text-sm text-center">${info.percentage}</div></td>		
 				<td><div class="${info.cormes} text-white px-2 py-1 rounded-md text-sm text-center">${info.vmes}</div></td>		
@@ -99,7 +96,8 @@ app.get('/', async (req, res) => {
 			<script src="https://cdn.tailwindcss.com"></script>
 			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 			<head>
-				<script>
+				
+			<script>
                 async function removeAcao(id) {
                     try {
                         const response = await fetch('/remover/' + id, {
@@ -118,13 +116,15 @@ app.get('/', async (req, res) => {
                         alert('Erro ao remover a ação');
                     }
                 }
-	            </script>	
-				<script>
+				
+				
+				
 				document.addEventListener('DOMContentLoaded', function() {
 				document.getElementById('stockForm').addEventListener('submit', function(event) {
 				event.preventDefault();
 				const stockName = document.getElementById('stockName').value;
-
+				
+				
 				fetch('/pegar', {
 					method: 'POST',
 				headers: {
@@ -132,11 +132,19 @@ app.get('/', async (req, res) => {
 				},
 				body: JSON.stringify({ stockName })
 				})
+				
 				.then(response => response.json())
 				.then(data => {
+							
 				const resultElement = document.getElementById('result');
 				const location = data.location || 'Nenhuma URL de redirecionamento encontrada';
 				resultElement.textContent = location;
+
+				const resultElement2 = document.getElementById('result2');
+				const location2 = data.location2 || 'Nenhum LOGO de encontrada';
+				resultElement2.textContent = location2;
+				resultElement2.innerHTML = '<img src=' + location2 + ' style="width: 30px; height: 30px; border-radius: 50%;">';
+
 
 				// Criando o botão "Adicionar ao Banco de Dados"
 				if (location !== 'Nenhuma URL de redirecionamento encontrada') {
@@ -180,31 +188,24 @@ app.get('/', async (req, res) => {
 				});
 			</script>
 			</head>
-			<form id="stockForm">
-				<center>
-				<div class="p-4 bg-gray-800">
-    		    	<span>
-					<input type="text" placeholder="Buscar no XNDG Finanças" class="bg-gray-700 text-gray-300  py-2 px-4 rounded-md focus:outline-none" id="stockName" name="stockName" required/>
-					</span>
-					<button class="css-button" type="submit"><span class="css-button-icon"><i class="fa fa-search" aria-hidden="true"></i></span></button> 
-    			</div>
-					<!-- <label for="stockName">Nome da Ação:</label>
-					<input type="text" id="stockName" name="stockName" required> 
-					<button class="css-button" type="submit"><span class="css-button-icon"><i class="fa fa-search" aria-hidden="true"></i></span></button> -->
-				</form>
-            <p id="result"></p>
-			
-       		</center>
-			<body>
-			 <div id="imageContainer"></div> <!-- Onde a imagem será exibida -->
-			  <script>
-				// URL da imagem
-				const imageUrl = 'https://s3-symbol-logo.tradingview.com/banco-do-brasil--big.svg';
 
-				// Adiciona a imagem no container
-				$('#imageContainer').html('<img src="' + imageUrl + '" style="width: 30px; height: 30px; border-radius: 50%;">');
-			</script>
-			<center><table>
+
+			<center>
+			<form id="stockForm">
+				<div class="p-4 bg-gray-800">
+					<span>	<input type="text" placeholder="Buscar no XNDG Finanças" class="bg-gray-700 text-gray-300  py-2 px-4 rounded-md focus:outline-none" id="stockName" name="stockName" required/>  </span>
+					<button class="css-button" type="submit"><span class="css-button-icon"><i class="fa fa-search" aria-hidden="true"></i></span></button> 
+				</div>
+			</form>
+			<label id="result2"></label><label id="result"></label>
+			
+			
+
+			</center>
+			<body>
+			
+			<center>
+			<table>
 				<tr>
 					<th>Ticker</th>		
 					<th>Setor</th>					
