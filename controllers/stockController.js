@@ -16,7 +16,7 @@ const lista  = async (req, res) => {
 // Rota para adicionar a ação do banco de dados
 const adicionar = async (req, res) => {
     try {
-        const { ticker, url } = req.body;
+        const { ticker, url, logo } = req.body;
 
         // Verificando se o ticker já existe no banco de dados
         const existingStock = await Acoes.findOne({ ticker });
@@ -26,7 +26,7 @@ const adicionar = async (req, res) => {
         }
 
         // Adicionando a nova ação
-        const newStock = new Acoes({ ticker, url });
+        const newStock = new Acoes({ ticker, url, logo });
         await newStock.save();
 
         res.json({ message: 'Ação adicionada ao banco de dados com sucesso!' });
@@ -63,9 +63,9 @@ const pegar = async (req, res) => {
     exec(`curl -L -silent ${urlogo} | grep "logo." | cut -d"/" -f6 | grep png | sed 's/"//' | uniq`, (errorLogo, stdoutLogo) => {
         if (errorLogo) return res.json({ error: 'Erro ao buscar a URL do logo' });
 
-        const location2 = stdoutLogo ? `https://s3-symbol-logo.tradingview.com/${stdoutLogo.trim()}` : 'Nenhum logo encontrado';
-        console.log('URLOGO É...', location2);
-    res.json({ location, location2 });
+        const logo = stdoutLogo ? `https://s3-symbol-logo.tradingview.com/${stdoutLogo.trim()}` : 'Nenhum logo encontrado';
+        console.log('URLOGO É...', logo);
+    res.json({ location, logo });
         });
     });
 };

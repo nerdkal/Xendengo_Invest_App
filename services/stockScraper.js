@@ -1,10 +1,12 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+
 class StockScraper {
 	constructor(stockName, url) {
 		this.stockName = stockName;
 		this.url = url;
+		
 	}
 
 	async scrapeInfo() {
@@ -23,9 +25,10 @@ class StockScraper {
 			const setor = $('h3:contains(Setor)').first().text().trim().split(':').pop();
 			//const vol = $('div.volume').first().text().trim().match(/[0-9+,.%-]+/)[0];
 			let i,cordia,cormes,corano,cormax;			
-
+			
 			// Constrói a segunda URL com base no nome da ação
 			const tradingViewUrl = 'https://br.tradingview.com/symbols/BMFBOVESPA-'+$('stockName');
+			
 			
 
 
@@ -57,6 +60,8 @@ class StockScraper {
 				cormax,
 				setor,
 				tradingViewUrl,
+				
+				
 			};
 		} catch (error) {
 			console.error(`Erro ao fazer o scraping do ${this.stockName}:`, error);

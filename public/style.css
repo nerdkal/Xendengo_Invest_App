@@ -143,3 +143,9 @@ body{
 
     .up { font-size: 20px; transform: rotate(180deg); background: linear-gradient(to bottom, green, rgb(55, 201, 64));     }
 
+    .logoc{
+        display: inline-flex; align-items: center;
+    }
+    .logosize{
+        width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;
+    }

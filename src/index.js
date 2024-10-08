@@ -49,14 +49,15 @@ db.connect("mongodb://" + (process.env.auth) + "@localhost:27017/ticker?retryWri
 app.get('/', async (req, res) => {
 	try {
 		// Buscando todos os documentos na coleção 'acoes'
-		const acoesList = await Acoes.find({}, { ticker: 1, url: 1, _id: 1, hora: 1 }); // Apenas 'ticker' e 'url' são retornados
+		const acoesList = await Acoes.find({}, { ticker: 1, url: 1, logo: 1, _id: 1, hora: 1 }); // Apenas 'ticker' e 'url' são retornados
 		const stockInfoPromises = acoesList.map(async (acao) => {
-		const scraper = new StockScraper(acao.ticker, acao.url);
+		const scraper = new StockScraper(acao.ticker, acao.url, acao.logo);
 		const scrapedInfo = await scraper.scrapeInfo();
 		return {
 				_id: acao._id,
 				ticker: acao.ticker.toUpperCase(),
 				url: acao.url,
+				logo: acao.logo ? acao.logo : '',  // Garantindo que o logo seja uma string válida
 				hora: acao.hora,
 				...scrapedInfo
 				};
@@ -65,13 +66,13 @@ app.get('/', async (req, res) => {
 		const stockInfos = await Promise.all(stockInfoPromises);
 		// Gerando o HTML
 		const rows = stockInfos.map(info => `
-		<!--<div class="p-4 space-y-4"> -->
 	    <tr id="row-${info._id}">
 		<td><div>
-        <!-- Stock Item --> 
+        
         <div>
             <div>
-				<a href="${info.tradingViewUrl}${info.ticker}"><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.ticker}</div></a>
+				<div class="logoc text-white px-2 py-1 text-sm text-center font-bold"><img src="${info.logo}" class="logosize"><a href="${info.url}"> ${info.ticker}</a></div>
+
 				<td><div class="text-white px-2 py-1 text-sm text-center font-bold"> ${info.setor}</div></td>
 				<td><div class="text-white px-2 py-1 text-sm text-center font-bold ">R$ ${info.price}</div></td>				
 				<td><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.tipo}</div></td>				
@@ -141,24 +142,25 @@ app.get('/', async (req, res) => {
 				resultElement.textContent = location;
 
 				const resultElement2 = document.getElementById('result2');
-				const location2 = data.location2 || 'Nenhum LOGO de encontrada';
-				resultElement2.textContent = location2;
-				resultElement2.innerHTML = '<img src=' + location2 + ' style="width: 50px; height: 50px; border-radius: 50%;">';
-
+				const logo = data.logo || 'Nenhum LOGO de encontrada';
+				resultElement2.textContent = logo;
+				resultElement2.innerHTML = '<img src=' + logo + ' style="width: 50px; height: 50px; border-radius: 50%;">';
+				console.log('logo');
 
 				// Criando o botão "Adicionar ao Banco de Dados"
 				if (location !== 'Nenhuma URL de redirecionamento encontrada') {
-					const [ticker, url] = location.split(' ');
+					const [ticker, url ] = location.split(' ');
 					const addButton = document.createElement('button');
 					addButton.textContent = ' ';
 					addButton.className = 'css-button fa fa-save fa-2x';
+					
 					addButton.addEventListener('click', function() {
 					fetch('/adicionar', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
 						},
-						body: JSON.stringify({ ticker, url })
+						body: JSON.stringify({ ticker, url, logo })
 					})
 					.then(addResponse => addResponse.json())
 					.then(addData => {
