@@ -139,21 +139,23 @@ app.get('/', async (req, res) => {
 							
 				const resultElement = document.getElementById('result');
 				const location = data.location || 'Nenhuma URL de redirecionamento encontrada';
-				resultElement.textContent = location;
+				//resultElement.textContent = location;
 
 				const resultElement2 = document.getElementById('result2');
 				const logo = data.logo || 'Nenhum LOGO de encontrada';
-				resultElement2.textContent = logo;
-				resultElement2.innerHTML = '<img src=' + logo + ' style="width: 50px; height: 50px; border-radius: 50%;">';
-				console.log('logo');
+				const boxElement = document.querySelector('.box');
+				boxElement.style.backgroundImage = 'url(' + logo + ')';
+				//console.log('logo');
 
 				// Criando o botão "Adicionar ao Banco de Dados"
 				if (location !== 'Nenhuma URL de redirecionamento encontrada') {
 					const [ticker, url ] = location.split(' ');
 					const addButton = document.createElement('button');
 					addButton.textContent = ' ';
-					addButton.className = 'css-button fa fa-save fa-2x';
-					
+					addButton.className = '  css-button fa fa-plus-circle fa-2x';
+					addButton.style.width = '90px';
+					addButton.style.marginBottom = '20px'; // Adiciona espaçamento inferior
+
 					addButton.addEventListener('click', function() {
 					fetch('/adicionar', {
 						method: 'POST',
@@ -193,12 +195,31 @@ app.get('/', async (req, res) => {
 
 			<center>
 			<form id="stockForm">
-				<div class="p-4 bg-gray-800">
-					<span>	<input type="text" placeholder="Buscar no XNDG Finanças" class="bg-gray-700 text-gray-300  py-2 px-4 rounded-md focus:outline-none" id="stockName" name="stockName" required/>  </span>
-					<button class="css-button" type="submit"><span class="css-button-icon"><i class="fa fa-search" aria-hidden="true"></i></span></button> 
+				<div class="bg-gray-800">
+				<label id="result2"></label>
+				<div class="box bounce-2"></div>
+			
+				<ul id="growing-search-freebie">
+					<li>
+					<!-- Start Freebie Markup -->
+					<div class="growing-search">
+						<div class="input">
+						<input type="text" placeholder="AÇÃO" id="stockName" name="stockName" required/>
+						</div><!-- Space hack --><div class="submit">
+						<button type="submit" name="go_search">
+							<span class="fa fa-search 2x"></span>
+						</button>
+						</div>
+					</div>
+					<!-- End Freebie Markup -->
+					</li>
+				</ul>
+				
 				</div>
 			</form>
-			<label id="result2"></label><label id="result"></label>
+			
+			
+			<label id="result"></label>
 			
 			
 
