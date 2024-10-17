@@ -1,8 +1,8 @@
 {
-  "name": "teste",
+  "name": "Xendengo Finance",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,11 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.4",
+    "axios": "^1.7.7",
     "cheerio": "^1.0.0",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "mongodb": "^6.8.0",
-    "mongoose": "^8.5.3"
+    "express": "^4.21.1",
+    "mongodb": "^6.9.0",
+    "mongoose": "^8.7.1"
   }
 }
