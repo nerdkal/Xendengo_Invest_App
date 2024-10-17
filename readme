@@ -18,11 +18,11 @@ Xendengo_Invest_App
 └── readme
 
 
-1. Initialize the Project
-npm init -y
+1. Prepare to init
+sudo apt install npm -y
 
 2. Install Dependencies
-npm install express axios cheerio mongoose mongodb dotenv
+npm install express axios cheerio mongoose mongodb dotenv -y
 
 3. Run the Application
 node src/index.js
