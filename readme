@@ -17,6 +17,16 @@ Xendengo_Invest_App
 ├── package-lock.json
 └── readme
 
+. github
+
+git clone https://github.com/nerdkal/Xendengo_Invest_App
+cd Xendengo_Invest_App/
+git pull
+git config --global user.email "user@mail.com"
+git config --global user.name "user"
+git remote set-url origin https://user:TOKEN@github.com/nerdkal/Xendengo_Invest_App.git
+git branch -a
+
 0. Database
 sudo apt-get install gnupg curl
 curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc |    sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg    --dearmor
