@@ -19,14 +19,13 @@ Xendengo_Invest_App
 
 .github
 
-git clone https://github.com/nerdkal/Xendengo_Invest_App
-cd Xendengo_Invest_App/
-git pull
 git config --global user.email "user@mail.com"
 git config --global user.name "user"
 git remote set-url origin https://user:TOKEN@github.com/nerdkal/Xendengo_Invest_App.git
-git branch -a
+git clone https://github.com/nerdkal/Xendengo_Invest_App
+cd Xendengo_Invest_App/
 git checkout App
+git pull
 
 0. Database
 sudo apt-get install gnupg curl
