@@ -47,7 +47,7 @@ if (whiptail --yesno "Você deseja instalar o MongoDB?" 10 60); then
     run_cmd "sudo systemctl status mongod"
     
     # Criar banco de dados e usuário
-    run_cmd "echo -e \"use ticker\ndb.createCollection('acoes')\ndb.createUser({ user: 'user', pwd: 'pass', roles: [{ role: 'readWrite', db: 'ticker' }] })\" | mongosh"
+    run_cmd echo -e "use ticker\ndb.createCollection('acoes')\ndb.createUser({ user: 'user', pwd: 'pass', roles: [{ role: 'readWrite', db: 'ticker' }] })" | mongosh --quiet
 fi
 
 # 4. Instalar npm
