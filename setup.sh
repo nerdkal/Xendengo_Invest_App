@@ -25,7 +25,7 @@ function run_cmd() {
 whiptail --title "Configuração do Xendengo Invest App" --msgbox "Bem-vindo! Este script irá instalar e configurar o Xendengo Invest App." 10 60
 
 # 1. Clonar o repositório
-run_cmd "git clone https://github.com/nerdkal/Xendengo_Invest_App"
+run_cmd "git clone https://github.com/nerdkal/Xendengo_Invest_App; git checkout App"
 
 # 2. Configurar Git
 GIT_EMAIL=$(whiptail --inputbox "Digite seu e-mail do Git:" 10 60 "user@mail.com" 3>&1 1>&2 2>&3)
@@ -44,8 +44,7 @@ if (whiptail --yesno "Você deseja instalar o MongoDB?" 10 60); then
     run_cmd "sudo apt-get update"
     run_cmd "sudo apt-get install -y mongodb-org"
     run_cmd "sudo systemctl start mongod"
-    run_cmd "sudo systemctl status mongod"
-    
+        
     # Criar banco de dados e usuário
     run_cmd echo -e "use ticker\ndb.createCollection('acoes')\ndb.createUser({ user: 'user', pwd: 'pass', roles: [{ role: 'readWrite', db: 'ticker' }] })" | mongosh --quiet
 fi
@@ -54,7 +53,7 @@ fi
 run_cmd "sudo apt install npm -y"
 
  5. Instalar dependências
-#run_cmd "npm install express axios cheerio mongoose mongodb dotenv -y"
+run_cmd "npm install express axios cheerio mongoose mongodb dotenv -y"
 
 # 6. Executar o aplicativo
 if (whiptail --yesno "Deseja executar o aplicativo agora?" 10 60); then
