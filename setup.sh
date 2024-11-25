@@ -44,9 +44,9 @@ run_cmd "git checkout App"
 
 # 2. Configurar Git (Opcional)
 if (whiptail --yesno "Você deseja configurar o Git?" 10 60); then
-    GIT_EMAIL=$(whiptail --inputbox "Digite seu e-mail do Git:" 10 60 "your git mail" 3>&1 1>&2 2>&3)
-    GIT_NAME=$(whiptail --inputbox "Digite seu nome do Git:" 10 60 "your git user" 3>&1 1>&2 2>&3)
-    GITHUB_TOKEN=$(whiptail --inputbox "Digite seu Token do GitHub:" 10 60 "TOKEN" 3>&1 1>&2 2>&3)
+    GIT_EMAIL=$(whiptail --inputbox "Digite seu e-mail do Git:" 10 60 3>&1 1>&2 2>&3)
+    GIT_NAME=$(whiptail --inputbox "Digite seu nome do Git:" 10 60 3>&1 1>&2 2>&3)
+    GITHUB_TOKEN=$(whiptail --inputbox "Digite seu Token do GitHub:" 10 60 3>&1 1>&2 2>&3)
 
     run_cmd "git config --global user.email \"$GIT_EMAIL\""
     run_cmd "git config --global user.name \"$GIT_NAME\""
@@ -66,15 +66,15 @@ if (whiptail --yesno "Você deseja instalar o MongoDB?" 10 60); then
 
     # Criar banco de dados e usuário
     mongosh --quiet <<EOF
-use ticker
-db.createCollection('acoes')
-db.createUser({
-    user: 'user',
-    pwd: 'pass',
-    roles: [{ role: 'readWrite', db: 'ticker' }]
-})
-EOF
-fi
+    use ticker
+    db.createCollection('acoes')
+    db.createUser({
+     user: 'user',
+     pwd: 'pass',
+     roles: [{ role: 'readWrite', db: 'ticker' }]
+    })
+    EOF
+ fi
 
 # 4. Instalar npm
 run_cmd "sudo apt install npm -y"
