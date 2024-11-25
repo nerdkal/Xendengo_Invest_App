@@ -71,10 +71,9 @@ if (whiptail --yesno "Você deseja instalar o MongoDB?" 10 60); then
     db.createUser({
      user: 'user',
      pwd: 'pass',
-     roles: [{ role: 'readWrite', db: 'ticker' }]
-    })
-    EOF
- fi
+     roles: [{ role: 'readWrite', db: 'ticker' }]    })
+EOF
+fi
 
 # 4. Instalar npm
 run_cmd "sudo apt install npm -y"
@@ -87,4 +86,4 @@ if (whiptail --yesno "Deseja executar o aplicativo agora?" 10 60); then
     run_cmd "node ."
 fi
 
-whiptail --title "Concluído" --msgbox "Configuração do Xendengo Invest App concluída!" 10 60
+whiptail --title "Concluído" --msgbox "Para executar use: 'node . ' ou 'node src/index.js'." 10 60
