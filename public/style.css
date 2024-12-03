@@ -276,3 +276,18 @@ color: #3498db;
     z-index: 9999;
   }
   
+
+
+
+.table-container {
+    width: 100%; /* Ajusta a largura do contêiner */
+    max-width: 1024px; /* Largura fixa opcional */
+}
+
+.menu-header-move {
+    width: 100%; /* Ajusta à largura do contêiner */
+    height: 30px;
+    display: block;
+    cursor: move;
+    background-color: #fff;
+}

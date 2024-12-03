@@ -201,8 +201,10 @@ app.get('/', async (req, res) => {
         }, 3000); // Depois de 3 segundos (tempo do alerta visível)
     };
 </script>
+
 </head>
 			<center>
+            
 			<form id="stockForm">
 				<div class="bg-gray-800">
 				<label id="result2"></label>
@@ -217,26 +219,47 @@ app.get('/', async (req, res) => {
 						</div><!-- Space hack --><div class="submit">
 						<button type="submit" name="go_search">
 							<span class="fa fa-search 4x"></span>
-						</button>
-						
+						</button>						
 						</div>
-					</div>
+					</div>                    
 					<!-- End Freebie Markup -->
 					</li>
 				</ul>
 				
 				</div>
 			</form>
-			
-			
 			<label id="result"></label>
-			
-			
+            <script>
+            // Seleciona o campo de entrada e o formulário
+            const inputField = document.getElementById('stockName');
+            const stockForm = document.getElementById('stockForm');
 
+            // Adiciona o evento de "blur" (quando perde o foco)
+            inputField.addEventListener('blur', function () {
+            if (this.value.trim() !== '') { // Verifica se o campo não está vazio
+                // Previne o envio padrão e simula uma ação
+                stockForm.dispatchEvent(new Event('submit'));
+            }
+            });
+
+            // Captura o evento de submissão para evitar o reload da página
+            stockForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Impede o comportamento padrão de recarregar a página
+
+            // Pega o valor digitado no campo
+            const stockValue = inputField.value.trim();
+            });
+            </script>	 
+            
 			</center>
-
-            <body>
+            <body>           
                 <center>
+                <div class="table-container">
+                    <div class="menu-header-move">
+                        <img src="/drag.gif" alt="Imagem">
+                    </div>
+                    
+                </div>
                     <table>
                         <thead>
                             <tr>
@@ -253,6 +276,7 @@ app.get('/', async (req, res) => {
                                 <th>Indicador</th>
                             </tr>
                         </thead>
+                        
                         <tbody id="stockTable">
                             ${rows}
                         </tbody>
