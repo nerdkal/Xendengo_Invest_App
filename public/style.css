@@ -291,3 +291,11 @@ color: #3498db;
     cursor: move;
     background-color: #fff;
 }
+.linha {
+    
+    --ui-lib-typography-line-height: 18px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e0e3eb;
+    line-height: var(--ui-lib-typography-line-height);
+}
+/* Animação para rotacionar a imagem */

@@ -252,14 +252,17 @@ app.get('/', async (req, res) => {
             </script>	 
             
 			</center>
-            <body>           
+            <body>      
+            
                 <center>
                 <div class="table-container">
                     <div class="menu-header-move">
                         <img src="/drag.gif" alt="Imagem">
                     </div>
-                    
+                                
+   
                 </div>
+                <div class="linha"></div>                   
                     <table>
                         <thead>
                             <tr>
