@@ -64,57 +64,65 @@ app.get('/', async (req, res) => {
 
         const stockInfos = await Promise.all(stockInfoPromises);
 
-        const rows = stockInfos.map(info => `
-            <tr id="row-${info._id}" class="draggable-row" >
-                <td><div class="logoc text-white px-2 py-1 text-sm text-center font-bold"><img src="${info.logo}" class="logosize"><a href="${info.url}">${info.ticker}</a></div>                </td>
-                <td><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.setor}</div></td>
-                <td><div class="text-white px-2 py-1 text-sm text-center font-bold">R$ ${info.price}</div></td>
-                <td><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.tipo}</div></td>
-                <td><div class="${info.cordia} text-white px-2 py-1 rounded-md text-sm text-center">${info.percentage}</div></td>
-                <td><div class="${info.cormes} text-white px-2 py-1 rounded-md text-sm text-center">${info.vmes}</div></td>
-                <td><div class="${info.corano} text-white px-2 py-1 rounded-md text-sm text-center">${info.vano}</div></td>
-                <td><div style="color:#FF6347" class="text-white px-2 py-1 text-sm text-center font-bold">${info.minimo}</div></td>
-                <td><div style="color:#9ACD32" class="font-bold">${info.maximo}</div></td>
-                <td><div class="text-sm text-center text-gray-400">${info.vol}</div></td>
-                <td><div class="text-white px-2 py-1 text-sm text-center"><i>${info.i}</i></div></td>
-                <td><button class="css-button" onclick="removeAcao('${info._id}')">
-                        <span class="css-button-icon"><i class="fa fa-trash-o"></i></span>
-                    </button></td>
-            </tr>
-        `).join('');
+        function createRow(info) {
+            return `
+                <tr id="row-${info._id}" class="draggable-row">
+                    <td>
+                        <div class="logoc text-white px-2 py-1 text-sm text-center font-bold">
+                            <img src="${info.logo}" class="logosize"><a href="${info.url}" target="_blank">${info.ticker}</a>
+                        </div>
+                    </td>
+                    <td><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.setor}</div></td>
+                    <td><div class="text-white px-2 py-1 text-sm text-center font-bold">R$ ${info.price}</div></td>
+                    <td><div class="text-white px-2 py-1 text-sm text-center font-bold">${info.tipo}</div></td>
+                    <td><div class="${info.cordia} text-white px-2 py-1 rounded-md text-sm text-center">${info.percentage}</div></td>
+                    <td><div class="${info.cormes} text-white px-2 py-1 rounded-md text-sm text-center">${info.vmes}</div></td>
+                    <td><div class="${info.corano} text-white px-2 py-1 rounded-md text-sm text-center">${info.vano}</div></td>
+                    <td><div style="color:#FF6347" class="text-white px-2 py-1 text-sm text-center font-bold">${info.minimo}</div></td>
+                    <td><div style="color:#9ACD32" class="font-bold">${info.maximo}</div></td>
+                    <td><div class="text-sm text-center text-gray-400">${info.vol}</div></td>
+                    <td><div class="text-white px-2 py-1 text-sm text-center"><i>${info.i}</i></div></td>
+                    <td>
+                        <button class="css-button" onclick="removeAcao('${info._id}')"><span class="css-button-icon"><i class="fa fa-trash-o"></i></span></button>
+                    </td>
+                </tr>
+            `;
+        }
+        const rows = stockInfos.map(createRow).join('');
+        
 
         const htmlContent = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <link rel="stylesheet" href="style.css" type="text/css" />
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                <script src="https://cdn.tailwindcss.com"></script>
-                <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <link rel="stylesheet" href="style.css" type="text/css" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script src="https://cdn.tailwindcss.com"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
-               
-               <script>
-    async function removeAcao(id) {
-        try {
-            const response = await fetch('/remover/' + id, {
-                method: 'DELETE',
-            });
-            const result = await response.json();
-            if (result.success) {
-                showAlert('Ação removida com sucesso');
-                document.getElementById('row-' + id).remove();
-                setTimeout(() => location.reload(), 4000); // Atualiza a página após 4 segundos
-            } else {
-                showAlert('Erro ao remover a ação');
+            
+            <script>
+            async function removeAcao(id) {
+                try {
+                    const response = await fetch('/remover/' + id, {
+                        method: 'DELETE',
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                        showAlert('Ação removida com sucesso');
+                        document.getElementById('row-' + id).remove();
+                        setTimeout(() => location.reload(), 4000); // Atualiza a página após 4 segundos
+                    } else {
+                        showAlert('Erro ao remover a ação');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    showAlert('Erro ao remover a ação');
+                }
             }
-        } catch (error) {
-            console.error('Erro:', error);
-            showAlert('Erro ao remover a ação');
-        }
-    }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('stockForm').addEventListener('submit', function(event) {
+            document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('stockForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const stockName = document.getElementById('stockName').value;
 
@@ -171,38 +179,38 @@ app.get('/', async (req, res) => {
                     // Adicionando o botão ao DOM
                     resultElement.insertAdjacentElement('afterend', addButton);
                 }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                document.getElementById('result').textContent = 'Erro ao buscar a URL da ação';
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    document.getElementById('result').textContent = 'Erro ao buscar a URL da ação';
+                });
             });
         });
-    });
 
-    // Função showAlert com efeito de entrada e saída
-    const showAlert = (message) => {
-        const alert = document.createElement('div');
-        alert.className = 'custom-alert';
-        alert.textContent = message;
-        alert.style.opacity = 0;  // Começa transparente
-        alert.style.transition = 'opacity 1s ease-in-out';  // Efeito de transição suave
+            // Função showAlert com efeito de entrada e saída
+            const showAlert = (message) => {
+                const alert = document.createElement('div');
+                alert.className = 'custom-alert';
+                alert.textContent = message;
+                alert.style.opacity = 0;  // Começa transparente
+                alert.style.transition = 'opacity 1s ease-in-out';  // Efeito de transição suave
 
-        document.body.appendChild(alert);
-        
-        // Efeito de entrada (do transparente para a cor final)
-        setTimeout(() => {
-            alert.style.opacity = 1; // Torna visível
-        }, 100);  // Inicia o efeito logo após adicionar o alerta na página
+                document.body.appendChild(alert);
+                
+                // Efeito de entrada (do transparente para a cor final)
+                setTimeout(() => {
+                    alert.style.opacity = 1; // Torna visível
+                }, 100);  // Inicia o efeito logo após adicionar o alerta na página
 
-        // Efeito de saída (da cor final para o transparente)
-        setTimeout(() => {
-            alert.style.opacity = 0; // Torna transparente
-            setTimeout(() => alert.remove(), 1000); // Remove o alerta após a transição
-        }, 3000); // Depois de 3 segundos (tempo do alerta visível)
-    };
-</script>
+                // Efeito de saída (da cor final para o transparente)
+                setTimeout(() => {
+                    alert.style.opacity = 0; // Torna transparente
+                    setTimeout(() => alert.remove(), 1000); // Remove o alerta após a transição
+                }, 3000); // Depois de 3 segundos (tempo do alerta visível)
+            };
+            </script>
 
-</head>
+            </head>
 			<center>
             
 			<form id="stockForm">
@@ -215,7 +223,7 @@ app.get('/', async (req, res) => {
 					<!-- Start Freebie Markup -->
 					<div class="growing-search">
 						<div class="input">
-						<input type="text" placeholder="AÇÃO" id="stockName" name="stockName" required/>
+						<input type="text" placeholder="AÇÃO" id="stockName" name="stockName" required/ >
 						</div><!-- Space hack --><div class="submit">
 						<button type="submit" name="go_search">
 							<span class="fa fa-search 4x"></span>
@@ -255,14 +263,13 @@ app.get('/', async (req, res) => {
             <body>      
             
                 <center>
+
+                <div class="linha"></div>
                 <div class="table-container">
                     <div class="menu-header-move">
                         <img src="/drag.gif" alt="Imagem">
                     </div>
-                                
-   
                 </div>
-                <div class="linha"></div>                   
                     <table>
                         <thead>
                             <tr>
@@ -278,8 +285,7 @@ app.get('/', async (req, res) => {
                                 <th>Volume</th>
                                 <th>Indicador</th>
                             </tr>
-                        </thead>
-                        
+                        </thead>             
                         <tbody id="stockTable">
                             ${rows}
                         </tbody>
