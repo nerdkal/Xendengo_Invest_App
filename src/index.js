@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 
 //DB connection versão localhost
-db.connect("mongodb://" + (process.env.auth) + "@localhost:27017/ticker?retryWrites=true&w=majority")
+db.connect("mongodb://" + (process.env.auth) + "@mongodb:27017/ticker?retryWrites=true&w=majority")
 	.then(() => {
 		console.log("\x1b[1m\x1b[32m\x1b[5m", 'Sucesso!  Conectado ao DB!', "\x1b[0m");  //cyan
 		app.listen(PORT, () => {
