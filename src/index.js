@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 
 //DB connection versão localhost
-db.connect("mongodb://" + (process.env.auth) + "@mongodb:27017/ticker?retryWrites=true&w=majority")
+db.connect("mongodb://" + (process.env.auth) + "@localhost:27017/ticker?retryWrites=true&w=majority")
 	.then(() => {
 		console.log("\x1b[1m\x1b[32m\x1b[5m", 'Sucesso!  Conectado ao DB!', "\x1b[0m");  //cyan
 		app.listen(PORT, () => {
@@ -213,29 +213,14 @@ app.get('/', async (req, res) => {
             </head>
 			<center>
             
-			<form id="stockForm">
-				<div class="bg-gray-800">
-				<label id="result2"></label>
-				<div class="box bounce-2"></div>
 			
-				<ul id="growing-search-freebie">
-					<li>
-					<!-- Start Freebie Markup -->
-					<div class="growing-search">
-						<div class="input">
-						<input type="text" placeholder="AÇÃO" id="stockName" name="stockName" required/ >
-						</div><!-- Space hack --><div class="submit">
-						<button type="submit" name="go_search">
-							<span class="fa fa-search 4x"></span>
-						</button>						
-						</div>
-					</div>                    
-					<!-- End Freebie Markup -->
-					</li>
-				</ul>
-				
-				</div>
-			</form>
+            <form id="stockForm" class="search-bar"><input type="search" placeholder="AÇÃO" id="stockName" name="stockName" required/ oninput="this.value = this.value.toUpperCase()" ><button class="search-btn" type="submit">
+            <span>Search</span>
+            </button>
+            </form>
+								<label id="result2"></label>										
+			
+            <div class="box bounce-2"></div>
 			<label id="result"></label>
             <script>
             // Seleciona o campo de entrada e o formulário
