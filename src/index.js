@@ -67,7 +67,7 @@ app.get('/', async (req, res) => {
         function createRow(info) {
             return `
                 <tr id="row-${info._id}" class="draggable-row">
-                    <td>
+                    <td class="boxi">
                         <div class="logoc text-white px-2 py-1 text-sm text-center font-bold">
                             <img src="${info.logo}" class="logosize"><a href="${info.url}" target="_blank">${info.ticker}</a>
                         </div>
@@ -212,10 +212,9 @@ app.get('/', async (req, res) => {
 
             </head>
 			<center>
-            
-			
+               
             <form id="stockForm" class="search-bar"><input type="search" placeholder="AÇÃO" id="stockName" name="stockName" required/ oninput="this.value = this.value.toUpperCase()" ><button class="search-btn" type="submit">
-            <span>Search</span>
+            
             </button>
             </form>
 								<label id="result2"></label>										
@@ -246,9 +245,8 @@ app.get('/', async (req, res) => {
             
 			</center>
             <body>      
-            
+           
                 <center>
-
                 <div class="linha"></div>
                 <div class="table-container">
                     <div class="menu-header-move">
