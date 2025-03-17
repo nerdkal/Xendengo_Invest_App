@@ -257,7 +257,7 @@ app.get('/', async (req, res) => {
   <div class="right">
   <div class="description"></div> <br>
     <div class="title" style="float: left;">
-      <div class=" box bounce-2" >
+      <div class=" box0 bounce-2" >
         <img src="https://s3-symbol-logo.tradingview.com/b3-on-nm--600.png" width="50px" height="50px" >
       </div>
     </div>
@@ -443,10 +443,11 @@ app.get('/', async (req, res) => {
         <form id="stockForm" class="search-bar"><input type="search" placeholder="AÇÃO" id="stockName" name="stockName" required/ oninput="this.value = this.value.toUpperCase()" >
           <button class="search-btn" type="submit"></button>
         </form>
-        <label id="result2"></label>										
-
+      <div class="another-container">
+        <label id="result2"></label>
         <div class="box bounce-2"></div>
         <label id="result"></label>
+      </div>
     </center>
     </div>
     <script>
