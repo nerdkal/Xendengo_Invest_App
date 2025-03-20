@@ -43,8 +43,8 @@ db.connect("mongodb://" + (process.env.auth) + "@localhost:27017/ticker?retryWri
 		console.log("\x1b[1m\x1b[31m\x1b[5m", 'Falha!   Conexão ao DB falhou', "\x1b[0m");
 	});
 
-	
-	
+
+
 // leitura de dados
 app.get('/', async (req, res) => {
     try {
@@ -73,6 +73,7 @@ app.get('/', async (req, res) => {
                             <img src="${info.logo}" class="logosize"><a href="${info.url}" target="_blank">${info.ticker}</a>
                         </div>
                     </td>
+
                     <td><div class="text-white px-2  text-center font-bold">${info.setor}</div></td>
                     <td><div class="text-white px-2  text-center font-bold">R$ ${info.price}</div></td>
                     <td><div class="text-white px-2  text-center font-bold">${info.tipo}</div></td>
@@ -83,12 +84,23 @@ app.get('/', async (req, res) => {
                     <td><div style="color:#9ACD32" class="font-bold">${info.maximo}</div></td>
                     <td><div class="text-sm text-center text-gray-400">${info.vol}</div></td>
                     <td><div class="text-white px-2 py-1 text-sm text-center"><i>${info.i}</i></div></td>
+                    
                     <td>
                         <button class="css-button" onclick="removeAcao('${info._id}')"><span class="css-button-icon"><i class="fa fa-trash-o"></i></span></button>
                     </td>
+                    
                 </tr>
             `;
         }
+        const ibovespaValue = stockInfos.length > 0 ? stockInfos[0].ibovespaValue : 'N/A'; // Pega o primeiro item ou N/A se não existir
+        const ibovespaVol = stockInfos.length > 0 ? stockInfos[0].ibovespaVol : 'N/A'; // Pega o primeiro item ou N/A se não existir
+        const dolarValue = stockInfos.length > 0 ? stockInfos[0].dolarValue : 'N/A'; // Pega o primeiro item ou N/A se não existir
+        const dolarVol = stockInfos.length > 0 ? stockInfos[0].dolarVol : 'N/A'; // Pega o primeiro item ou N/A se não existir
+        const bitcoinValue = stockInfos.length > 0 ? stockInfos[0].bitcoinValue : 'N/A';
+        const bitcoinVol = stockInfos.length > 0 ? stockInfos[0].bitcoinVol : 'N/A';
+        const ifixValue = stockInfos.length > 0 ? stockInfos[0].ifixValue : 'N/A';
+        const ifixVol = stockInfos.length > 0 ? stockInfos[0].ifixVol : 'N/A';
+
         const rows = stockInfos.map(createRow).join('');
         
 
@@ -116,6 +128,9 @@ app.get('/', async (req, res) => {
               marquee.classList.add("enable-animation");
         });
         </script>
+
+
+
         <script>
           async function removeAcao(id) {
               try {
@@ -162,7 +177,7 @@ app.get('/', async (req, res) => {
                 if (location !== 'Nenhuma URL de redirecionamento encontrada') {
                     const [ticker, url] = location.split(' ');
                     const addButton = document.createElement('button');
-                    addButton.textContent = ' ';
+                    addButton.textContent = 'adicionar';
                     addButton.className = 'css-button fa fa-plus-circle fa-2x';
                     addButton.style.width = '90px';
                     addButton.style.marginBottom = '20px'; // Adiciona espaçamento inferior
@@ -178,7 +193,7 @@ app.get('/', async (req, res) => {
                         .then(addResponse => addResponse.json())
                         .then(addData => {
                             showAlert('Ação ' + ticker + ' adicionada ao banco de dados com sucesso!');
-                            setTimeout(() => window.location.reload(), 4000); // Atualiza a página após 4 segundos
+                            setTimeout(() => window.location.reload(), 500); // Atualiza a página após 4 segundos
                         })
                         .catch(addError => {
                             console.error('Erro ao adicionar a ação ao banco de dados:', addError);
@@ -221,11 +236,12 @@ app.get('/', async (req, res) => {
             setTimeout(() => {
                 alert.style.opacity = 0; // Torna transparente
                 setTimeout(() => alert.remove(), 1000); // Remove o alerta após a transição
-            }, 3000); // Depois de 3 segundos (tempo do alerta visível)
+            }, 0000); // Depois de 3 segundos (tempo do alerta visível)
         };
         </script>
 </head>
 <body>
+     
 <!-- partial:index.partial.html -->
 <div class="center">
   <div class="left">
@@ -415,23 +431,21 @@ app.get('/', async (req, res) => {
      
     <div> 
     
-  
     <center>
     <section>
       <div class="marquee marquee--hover-pause">
         <ul class="marquee__content">
-          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r "><span class="w-max flex flex-nowrap"> Ibovespa </span><span class="w-max flex flex-nowrap font-normal"> 128.957pts </span><span class="text-wl-asset-rise font-semi-bold"> +2,64% </span></div></a></span></li>
-          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r "><span class="w-max flex flex-nowrap"> DÓLAR </span><span class="w-max flex flex-nowrap font-normal"> R$5,74 </span><span class="text-wl-asset-down font-semi-bold"> -1,02% </span></div></a></span></li>
-          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r "><span class="w-max flex flex-nowrap"> BITCOIN </span><span class="w-max flex flex-nowrap font-normal"> R$485.040 </span><span class="text-wl-asset-rise font-semi-bold"> +4,11% </span></div></a></span></li>
-          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r "><span class="w-max flex flex-nowrap"> IFIX </span><span class="w-max flex flex-nowrap font-normal"> 3.213pts </span><span class="text-wl-asset-rise font-semi-bold"> +0,76% </span></div></a></span></li>
+          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r">Ibovespa ${ibovespaValue} <span class="w-max flex flex-nowrap font-normal" style="color: ${String(ibovespaVol).startsWith('-') ? 'red' : 'green'};"> ${ibovespaVol}</span></div></span></li>
+          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r">Dolar ${dolarValue} <span class="w-max flex flex-nowrap font-normal" style="color: ${String(dolarVol).startsWith('-') ? 'red' : 'green'};"> ${dolarVol}</span></div></span></li>
+          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r">BTC ${bitcoinValue} <span class="w-max flex flex-nowrap font-normal" style="color: ${String(bitcoinVol).startsWith('-') ? 'red' : 'green'};"> ${bitcoinVol}</span></div></span></li>
+          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r">IFIX ${ifixValue} <span class="w-max flex flex-nowrap font-normal" style="color: ${String(ifixVol).startsWith('-') ? 'red' : 'green'};"> ${ifixVol}</span></div></span></li>
           
         </ul>
         <ul aria-hidden="true" class="marquee__content">
-          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r "><span class="w-max flex flex-nowrap"> Ibovespa </span><span class="w-max flex flex-nowrap font-normal"> 128.957pts </span><span class="text-wl-asset-rise font-semi-bold"> +2,64% </span></div></a></span></li>
-          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r "><span class="w-max flex flex-nowrap"> DÓLAR </span><span class="w-max flex flex-nowrap font-normal"> R$5,74 </span><span class="text-wl-asset-down font-semi-bold"> -1,02% </span></div></a></span></li>
-          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r "><span class="w-max flex flex-nowrap"> BITCOIN </span><span class="w-max flex flex-nowrap font-normal"> R$485.040 </span><span class="text-wl-asset-rise font-semi-bold"> +4,11% </span></div></a></span></li>
-          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r "><span class="w-max flex flex-nowrap"> IFIX </span><span class="w-max flex flex-nowrap font-normal"> 3.213pts </span><span class="text-wl-asset-rise font-semi-bold"> +0,76% </span></div></a></span></li>
-          
+          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r">Ibovespa ${ibovespaValue} <span class="w-max flex flex-nowrap font-normal" style="color: ${String(ibovespaVol).startsWith('-') ? 'red' : 'green'};"> ${ibovespaVol}</span></div></span></li>
+          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r">Dolar ${dolarValue} <span class="w-max flex flex-nowrap font-normal" style="color: ${String(dolarVol).startsWith('-') ? 'red' : 'green'};"> ${dolarVol}</span></div></span></li>
+          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r">BTC ${bitcoinValue} <span class="w-max flex flex-nowrap font-normal" style="color: ${String(bitcoinVol).startsWith('-') ? 'red' : 'green'};"> ${bitcoinVol}</span></div></span></li>
+          <li><span><div class="flex flex-nowrap gap-2 !px-4 !py-2 text-xs leading-4 !border-r">IFIX ${ifixValue} <span class="w-max flex flex-nowrap font-normal" style="color: ${String(ifixVol).startsWith('-') ? 'red' : 'green'};"> ${ifixVol}</span></div></span></li>        
         </ul>
       </div>
     </section>
@@ -443,10 +457,11 @@ app.get('/', async (req, res) => {
         <form id="stockForm" class="search-bar"><input type="search" placeholder="AÇÃO" id="stockName" name="stockName" required/ oninput="this.value = this.value.toUpperCase()" >
           <button class="search-btn" type="submit"></button>
         </form>
-      <div class="another-container">
+      <div>
         <label id="result2"></label>
         <div class="box bounce-2"></div>
         <label id="result"></label>
+        
       </div>
     </center>
     </div>
@@ -486,6 +501,7 @@ app.get('/', async (req, res) => {
                 <th>Máximo</th>
                 <th>Volume</th>
                 <th>Indicador</th>
+                
             </tr>
         </thead>             
         <tbody id="stockTable">

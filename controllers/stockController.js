@@ -50,6 +50,8 @@ const remover = async (req, res) => {
 };
 
 
+
+
 // Rota para pegar Link re ações
 const pegar = async (req, res) => {
     const { stockName } = req.body;
@@ -69,6 +71,7 @@ const pegar = async (req, res) => {
         });
     });
 };
+
 
 
 module.exports = {

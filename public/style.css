@@ -842,3 +842,6 @@ color: #3498db;
   padding-top: 0.5rem !important;
   padding-bottom: 0.5rem !important;
 }
+.text-red {
+  color: red;
+}
