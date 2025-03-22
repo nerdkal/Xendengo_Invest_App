@@ -845,3 +845,16 @@ color: #3498db;
 .text-red {
   color: red;
 }
+
+.ico {
+  height: 22px;
+  width: 22px;
+  color: #ff0000;
+  background-color: #efdede;
+  box-shadow: 0 0 45px 0 rgba(0, 0, 0, .12);
+  text-align: center;
+  border-radius: 50%;
+  float: left;
+  font-weight: 700;
+  line-height: 30px;
+}
