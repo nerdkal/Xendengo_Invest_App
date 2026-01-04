@@ -1,48 +1,51 @@
+require('dotenv').config();                  // Primeiro: carrega .env
+const express = require('express');
+const mongoose = require('mongoose');         // Use mongoose, não require('mongoose') em variável db
 const path = require('path');
-const Acoes = require('../models/mongoose');
+
+// Imports do seu projeto (mantenha se existirem)
+const Acoes = require('../models/mongoose'); // ajuste se necessário
 const StockScraper = require('../services/stockScraper');
-const stockController = require('../controllers/stockController'); // Importa o controlador
-
-const express = require('express')
-const axios = require('axios')
-const cheerio = require('cheerio')
-const db = require('mongoose')
-const { exec } = require('child_process')
-require('dotenv').config();
-
+const stockController = require('../controllers/stockController');
 
 const app = express();
-const PORT = (process.env.port);
-
-
+const PORT = process.env.PORT || 3000;        // Corrigido: process.env.PORT (maiúsculo) e fallback
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
-//DB connection & start server versão online
-//db.connect("mongodb+srv://"+auth+"@xndgdb.ywuzd.mongodb.net/ticker?retryWrites=true&w=majority&appName=XNDGDB")
-//auth recebe credenciais no formato: auth=user:pass do aquivo .env
-//banco de dados: ticker
-//user do banco:  useracoes
+// ==================== CONEXÃO COM MONGODB LOCAL ====================
 
+if (!process.env.MONGO_USER || !process.env.MONGO_PASS) {
+  console.error('❌ MONGO_USER ou MONGO_PASS não encontrados no .env');
+  process.exit(1);
+}
 
+const user = encodeURIComponent(process.env.MONGO_USER);
+const pass = encodeURIComponent(process.env.MONGO_PASS);
 
+// URI que funcionou no seu teste com mongosh + authSource=admin (necessário na maioria dos casos)
+const uri = `mongodb://${user}:${pass}@localhost:27017/ticker`;
 
+console.log('Tentando conectar com URI:', uri.replace(pass, '[SENHA_OCULTA]'));
 
-//DB connection versão localhost
-db.connect("mongodb://" + (process.env.auth) + "@10.0.2.51:27017/ticker?retryWrites=true&w=majority")
-	.then(() => {
-		console.log("\x1b[1m\x1b[32m\x1b[5m", 'Sucesso!  Conectado ao DB!', "\x1b[0m");  //cyan
-		app.listen(PORT, () => {
-			console.log('Servidor rodando em\x1b[1m\x1b[36m', `\x1b[4mhttp://localhost:${PORT}\x1b[0m`);
-		});
-	})
-	.catch(() => {
-		console.log("\x1b[1m\x1b[31m\x1b[5m", 'Falha!   Conexão ao DB falhou', "\x1b[0m");
-	});
+mongoose.connect(uri)
+  .then(() => {
+    console.log('\x1b[1m\x1b[32m\x1b[5m✅ Sucesso! Conectado ao DB (ticker)!\x1b[0m');
+    app.listen(PORT, () => {
+      console.log(`🚀 Servidor rodando em \x1b[1m\x1b[36m\x1b[4mhttp://localhost:${PORT}\x1b[0m`);
+    });
+  })
+  .catch((err) => {
+    console.error('\x1b[1m\x1b[31m\x1b[5m❌ Falha! Conexão ao DB falhou\x1b[0m');
+    console.error('Erro detalhado:', err.message);
+  });
 
+// ==================== ROTAS (adicione aqui ou importe) ====================
+// Exemplo: se você usa o stockController
+// app.use('/', stockController);  // ou as rotas específicas que você tem
 
 
 // leitura de dados
