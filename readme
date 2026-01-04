@@ -1,56 +1,29 @@
-
-Xendengo_Invest_App
-├── controllers
-│   └── stockController.js
-├── models
-│   └── mongoose.js
-── node_modules
-── public
-│   └── style.css
-├── services
-│   └── stockScraper.js
-├── src
-│   └── .env.example
-│   └── index.js
-│   └── .gitignore
-├── package.json
-├── package-lock.json
-└── readme
-
- Configuração do Git (primeira vez)
-git config --global user.email "user@mail.com"
-git config --global user.name "user"
-git remote set-url origin https://user:TOKEN@github.com/nerdkal/Xendengo_Invest_App.git
-
- Clonar o repositório e atualizar
 git clone https://github.com/nerdkal/Xendengo_Invest_App
 cd Xendengo_Invest_App/
 git checkout App
 git pull origin App
 
-0. Database
+1. Database
 sudo apt-get install gnupg curl -y
 curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
 echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
 sudo apt-get update
 sudo apt-get install -y mongodb-org
 
- Iniciar o MongoDB e verificar status
+2. Iniciar o MongoDB e verificar status
 sudo systemctl start mongod
 sudo systemctl enable mongod  # inicia automaticamente no boot
-sudo systemctl status mongod   
 
- Criar banco, coleção e usuário com permissões
+3. Criar banco, coleção e usuário com permissões
 echo -e "use ticker\ndb.createCollection('acoes')\ndb.createUser({    user: 'user',    pwd: 'pass',    roles: [        { role: 'readWrite', db: 'ticker' }     ] })" | mongosh
 
- Instalar dependências do projeto
-sudo npm install -y
-npm install express axios cheerio mongoose mongodb dotenv -y
+4. Instalar dependências do projeto
+sudo npm install express axios cheerio mongoose mongodb dotenv -y
 
 ** Renomear .env.example para .env
+** Rename .env.example to .env
 
  Rodar a aplicação
 node src/index.js 
-node . 
 
-teste: http://localhost:3000
+http://localhost:3000
